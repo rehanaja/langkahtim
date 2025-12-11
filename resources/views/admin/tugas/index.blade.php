@@ -3,20 +3,20 @@
 @section('content')
  <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">
-        <i class="fas fa-tasks mr-2"></i>
+        <i class="fas fa-user mr-2"></i>
         {{ $title }}
     </h1>
 
     <div class="card">
         <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
             <div class="mr-2">
-                <a href="" class="btn btn-primary btn-sm">
+                <a href="{{ route('tugasCreate') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Data
                 </a>
             </div>
              <div>
-                <a href="" class="btn btn-success btn-sm">
+                <a href="{{ route('userExcel') }}" class="btn btn-success btn-sm">
                     <i class="fas fa-file-excel mr-2"></i>
                     Excel
                 </a>
@@ -42,25 +42,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Muhamad</td>
-                                            <td>Customer Support</td>
-                                            <td class="text-center">
-                                                <span class="badge badge-dark badge-pill">Ketua</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge badge-danger badge-pill">Belum ditugaskan</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="#" class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach ($tugas as $item )
+                                            <tr class="text-center">
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td>{{ $item->user->nama }}</td>
+                                                <td>{{ $item->tugas }}</td>
+                                                <td>{{ $item->tanggal_mulai }}</td>
+                                                <td>{{ $item->tanggal_selesai }}</td>
+
+                                                <td>
+                                                    <a href="{{ route('userEdit', $item->id) }}" class="btn btn-sm btn-warning">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+
+                                                    <!-- Button trigger modal -->
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalHapus{{ $item->id }}">
+                                                <i class="fas fa-trash"></i>
+                                                </button>
+                                                    @include('admin.user.modal')
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
