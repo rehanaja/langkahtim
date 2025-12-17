@@ -39,9 +39,15 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
+                                    @if (Auth()->user()->role == 'Ketua')
                                     <div class="badge badge-dark justify-content-center d-flex">
-                                        Ketua
+                                            {{  Auth()->user()->role }}
                                     </div>
+                                    @else
+                                    <div class="badge badge-light justify-content-center d-flex">
+                                            {{  Auth()->user()->role }}
+                                    </div>
+                                    @endif
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>

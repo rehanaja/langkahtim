@@ -8,14 +8,14 @@
     </h1>
 
     <div class="card">
-        <div class="card-header bg-primary">
+        <div class="card-header bg-warning">
                 <a href="{{ route('tugas') }}" class="btn btn-success btn-sm">
                     <i class="fas fa-arrow-left mr-2"></i>
                     Kembali
                 </a>
         </div>
         <div class="card-body">
-            <form action="{{ route('tugasStore') }}" method="post">
+            <form action="{{ route('tugasUpdate', $tugas->id) }}" method="post">
                 @csrf
 
                 <div class="row mb-2">
@@ -23,19 +23,7 @@
                     <label for="role" class="form-label w-100">
                         <span class="text-danger">*</span>
                         Nama :
-                        <select name="user_id" id="user_id" class="form-control mt-1 @error('user_id')
-                        is-invalid
-                    @enderror">
-                            <option selected disabled>--Pilih User---</option>
-                            @foreach ($user as $item )
-                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                            @endforeach
-                        </select>
-                        @error('user_id')
-                        <small class="text-danger">
-                            {{ $message }}
-                        </small>
-                    @enderror
+                       <input type="text" value="{{ $tugas->user->nama }}" class="form-control" disabled>
                     </label>
                 </div>
             </div>
@@ -48,7 +36,7 @@
                     </label>
                     <textarea name="tugas" id="tugas" rows="5" class="form-control @error('tugas')
                         is-invalid
-                    @enderror"></textarea>
+                    @enderror">{{ $tugas->tugas }}</textarea>
                     @error('tugas')
                     <small class="text-danger">
                         {{ $message }}
@@ -63,7 +51,7 @@
                         <span class="text-danger">*</span>
                         Tanggal Mulai :
                     </label>
-                    <input type="date" name="tanggal_mulai" class="form-control @error('tanggal_mulai')
+                    <input type="date" name="tanggal_mulai" value="{{ $tugas->tanggal_mulai }}" class="form-control @error('tanggal_mulai')
                         is-invalid
                     @enderror">
                     @error('tanggal_mulai')
@@ -78,7 +66,7 @@
                         <span class="text-danger">*</span>
                         Tanggal Selesai :
                     </label>
-                    <input type="date" name="tanggal_selesai" class="form-control @error('tanggal_selesai')
+                    <input type="date" name="tanggal_selesai" value="{{ $tugas->tanggal_selesai }}" class="form-control @error('tanggal_selesai')
                         is-invalid
                     @enderror">
                     @error('tanggal_selesai')
@@ -90,9 +78,9 @@
             </div>
 
             <div class="mt-3">
-                <button type="submit" class="btn btn-sm btn-primary">
-                    <i class="fas fa-save mr-2"></i>
-                    Simpan
+                <button type="submit" class="btn btn-sm btn-warning">
+                    <i class="fas fa-edit mr-2"></i>
+                    Edit
                 </button>
             </div>
             </form>

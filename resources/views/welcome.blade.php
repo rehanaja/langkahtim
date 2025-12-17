@@ -57,7 +57,12 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
+      @auth
+      <a class="btn-getstarted" href="{{ route('dashboard') }}">Dashboard</a>
+      @else
       <a class="btn-getstarted" href="{{ route('login') }}">Login</a>
+      @endauth
+
 
     </div>
   </header>
@@ -73,7 +78,11 @@
             <h1>Setiap Langkah Tim, Sukses Bersama</h1>
             <p>Koordinasi, kolaborasi, dan pencapaian target tim kini lebih mudah dan terstruktur.</p>
             <div class="d-flex">
-              <a href="#about" class="btn-get-started">Mulai Langkah Pertama</a>
+              @auth
+              <a href="{{ route('dashboard') }}" class="btn-get-started">Mulai Langkah Pertama</a>
+              @else
+              <a href="{{ route('login') }}" class="btn-get-started">Login</a>
+              @endauth
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">

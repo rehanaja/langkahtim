@@ -16,19 +16,19 @@
                 </a>
             </div>
              <div>
-                <a href="{{ route('userExcel') }}" class="btn btn-success btn-sm">
+                <a href="{{ route('tugasExcel') }}" class="btn btn-success btn-sm">
                     <i class="fas fa-file-excel mr-2"></i>
                     Excel
                 </a>
-                <a href="" class="btn btn-danger btn-sm">
+                <!-- <a href="" class="btn btn-danger btn-sm">
                     <i class="fas fa-file-excel mr-2"></i>
                     PDF
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="bg-primary text-white">
                                         <tr class="text-center">
                                             <th>No</th>
@@ -51,15 +51,19 @@
                                                 <td>{{ $item->tanggal_selesai }}</td>
 
                                                 <td>
-                                                    <a href="{{ route('userEdit', $item->id) }}" class="btn btn-sm btn-warning">
+                                                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalShowTugas{{ $item->id }}">
+                                                <i class="fas fa-eye"></i>
+                                                </button>
+
+                                                    <a href="{{ route('tugasEdit', $item->id) }}" class="btn btn-sm btn-warning">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <!-- Button trigger modal -->
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalHapus{{ $item->id }}">
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalDeleteTugas{{ $item->id }}">
                                                 <i class="fas fa-trash"></i>
                                                 </button>
-                                                    @include('admin.user.modal')
+                                                    @include('admin.tugas.modal')
                                                 </td>
                                             </tr>
                                         @endforeach
