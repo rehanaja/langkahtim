@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\TugasExport;
 use App\Models\Tugas;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,6 +27,7 @@ class TugasController extends Controller
             return view('anggota/tugas/index', [
                  "title" => "Data Tugas",
                  "isKaryawanTugas" => "active",
+                 "tugas" => Tugas::with('user')->where('user_id', $user->id)->first(),
              ]);
         }
     }
@@ -113,5 +115,30 @@ class TugasController extends Controller
     public function excel() {
         $filename = now()->format('d-m-Y_H.i.s');
         return Excel::download(new tugasExport, 'DataTugas_' . $filename . '.xlsx');
+    }
+
+    public function pdf() {
+        $user = Auth::user();
+        $filename = now()->format('d-m-Y_H.i.s');
+
+        if ($user->role == 'Ketua') {
+            $pdf = Pdf::loadView('admin/tugas/pdf', [
+            'tugas' => Tugas::with('user')->get(),
+            'tanggal' => now()->format('d-m-Y'),
+            'jam' => now()->format('H.i.s'),
+        ]);
+
+        return $pdf->setPaper('a4', 'landscape')->stream('DataTugas_' . $filename . '.pdf');
+        } else {
+            $pdf = Pdf::loadView('anggota/tugas/pdf', [
+            'tanggal' => now()->format('d-m-Y'),
+            'jam' => now()->format('H.i.s'),
+            'tugas' => Tugas::with('user')->where('user_id', $user->id)->first(),
+        ]);
+
+        return $pdf->setPaper('a4', 'portrait')->stream('DataTugas_' . $filename . '.pdf');
+        }
+
+        
     }
 }

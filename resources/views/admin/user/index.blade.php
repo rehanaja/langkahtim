@@ -9,7 +9,7 @@
 
     <div class="card">
         <div class="card-header d-flex flex-wrap justify-content-center justify-content-xl-between">
-            <div class="mr-2">
+            <div class="mr-1">
                 <a href="{{ route('userCreate') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Data
@@ -19,6 +19,10 @@
                 <a href="{{ route('userExcel') }}" class="btn btn-success btn-sm">
                     <i class="fas fa-file-excel mr-2"></i>
                     Excel
+                </a>
+                <a href="{{ route('userPdf') }}" class="btn btn-danger btn-sm" target="_blank">
+                    <i class="fas fa-file-pdf mr-2"></i>
+                    PDF
                 </a>
             </div>
         </div>

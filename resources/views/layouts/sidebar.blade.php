@@ -24,7 +24,7 @@
             @if (Auth()->user()->role == 'Ketua') 
                  <!-- Heading -->
             <div class="sidebar-heading">
-                MENU ADMIN
+                MENU KETUA
             </div>
 
             <!-- Nav Item - Charts -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -81,10 +82,15 @@ class UserController extends Controller
             'password.min' => 'Password minimal 8 karakter',
         ]);
 
-        $user = User::findOrFail($id);
+        $user = User::with('tugas')->findOrFail($id);
         $user->nama = $request->nama;
         $user->email = $request->email;
         $user->role = $request->role;
+        if ($request->role == 'Ketua') {
+            $user->is_tugas = false;
+            $user->tugas()->delete();
+        }
+
         if($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -103,5 +109,17 @@ class UserController extends Controller
     public function excel() {
         $filename = now()->format('d-m-Y_H.i.s');
         return Excel::download(new UserExport, 'DataUser_' . $filename . '.xlsx');
+    }
+
+    public function pdf(){
+        $filename = now()->format('d-m-Y_H.i.s');
+        $data = array(
+            'user' => User::get(),
+            'tanggal' => now()->format('d-m-Y'),
+            'jam' => now()->format('H.i.s'),
+        ); 
+
+        $pdf = Pdf::loadView('admin/user/pdf', $data);
+        return $pdf->setPaper('a4', 'landscape')->stream('DataUser_' . $filename. '.pdf');
     }
  }
