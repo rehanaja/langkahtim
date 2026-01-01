@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('project_manager_id')
-                ->constrained('users')
+            $table->foreignId('organization_id')
+                ->constrained('organizations')
                 ->cascadeOnDelete();
 
             $table->string('project_name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->date('deadline');
 
             $table->enum('status', ['active', 'completed'])

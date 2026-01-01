@@ -19,29 +19,14 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
-        'nama',
+        'name',
         'email',
-        'role_id',
         'password',
     ];
 
-    public function tugas() {
-        return $this->hasOne(Tugas::class);
-    }
-
-    public function role()
+    public function tasks()
     {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function task()
-    {
-        return $this->hasMany(Task::class);
-    }
-
-    public function ownedprojects()
-    {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Task::class, 'assigned_to');
     }
 
     public function memberProjects()
@@ -53,7 +38,33 @@ class User extends Authenticatable
 
     public function approvedTasks()
     {
-        return $this->hasMany(Approval::class, 'approved_by');
+        return $this->hasMany(TaskApproval::class, 'approved_by');
+    }
+
+    /**
+     * Organization yang dimiliki user (sebagai owner)
+     */
+    public function ownedOrganizations()
+    {
+        return $this->hasMany(Organization::class, 'owner_id');
+    }
+
+    /**
+     * Organization tempat user bergabung (owner / PM / member)
+     */
+    public function organizations()
+    {
+        return $this->belongsToMany(Organization::class, 'organization_users')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Helper: cek super admin
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->is_super_admin;
     }
 
     /**
@@ -76,6 +87,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_super_admin' => 'boolean',
         ];
     }
 }

@@ -16,10 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
 
-            $table->unsignedBigInteger('role_id');
-
-
             $table->string('password');
+            $table->boolean('is_super_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

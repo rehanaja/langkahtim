@@ -29,7 +29,7 @@ class Task extends Model
 
     public function approval()
     {
-        return $this->hasOne(Approval::class);
+        return $this->hasOne(TaskApproval::class);
     }
 
     public function subTask()
