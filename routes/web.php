@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('auth.login');
+});
+
+
 
 Route::middleware('isLogin')->group(function()  {
     // Login
@@ -19,6 +21,9 @@ Route::middleware('isLogin')->group(function()  {
     Route::post('login', [AuthController::class, 'loginProses'])->name('loginProses');
 });
 
+// register
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'registerProses'])->name('registerProses');
 
 
 // logout

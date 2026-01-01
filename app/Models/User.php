@@ -17,16 +17,43 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
     protected $fillable = [
         'nama',
         'email',
-        'role',
-        'is_tugas',
+        'role_id',
         'password',
     ];
 
     public function tugas() {
         return $this->hasOne(Tugas::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function ownedprojects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    public function memberProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_members')
+            ->withPivot('project_role')
+            ->withTimestamps();
+    }
+
+    public function approvedTasks()
+    {
+        return $this->hasMany(Approval::class, 'approved_by');
     }
 
     /**
