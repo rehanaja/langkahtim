@@ -15,12 +15,12 @@ class Organization extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->hasOne(OrganizationUser::class)->where('role', 'owner');
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'organization_users')->withPivot('role')->withTimestamps();
+        return $this->belongsToMany(User::class, 'organization_users')->using('OrganizationUser')->withPivot('role')->withTimestamps();
     }
 
     public function projects()

@@ -9,6 +9,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        return view('dashboard', [
+            'title' => 'Dashboard',
+            'isDashboard' => 'active',
+            'isIconColor' => '#fff',
+        ]);
     }
 }
