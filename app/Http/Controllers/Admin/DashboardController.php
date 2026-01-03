@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard', [
+        return view('admin.dashboard', [
             'title' => 'Dashboard',
             'isDashboard' => 'active',
             'isIconColor' => '#fff',
