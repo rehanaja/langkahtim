@@ -9,10 +9,11 @@ class ProfilController extends Controller
 {
     public function index()
     {
-        return view('admin.profile', [
-            'title' => 'Profile',
-            'isProfile' => 'active',
-            'isIconColorProfile' => '#fff'
+        return view('admin.profil', [
+            'title' => 'Profil Admin',
+            'isProfil' => 'active',
+            'isIconColorProfil' => '#fff',
+            'breadcrumb' => 'Setting / '
         ]);
     }
 }

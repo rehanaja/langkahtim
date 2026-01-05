@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AuditLogController extends Controller
+class SubcriptionController extends Controller
 {
     public function  index()
     {
         $data = array(
-            'title' => 'Audit Log',
-            'isAuditLog' => 'active',
-            'isIconColorAuditLog' => '#fff',
+            'title' => 'Subcription',
+            'isSubcription' => 'active',
+            'isIconColorSubcription' => '#fff',
             'breadcrumb' => 'Setting / '
-
         );
-        return view('admin.auditlog.index', $data);
+        return view('admin.subcription.index', $data);
     }
 }
